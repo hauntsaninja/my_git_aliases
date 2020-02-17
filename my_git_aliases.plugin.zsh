@@ -43,6 +43,7 @@ alias gd='git diff'
 alias gdc='git diff --cached'
 
 alias gf='git fetch'
+alias gfu='git fetch upstream'
 
 alias glg='git log --stat'
 alias glgp='git log --stat --patch'
