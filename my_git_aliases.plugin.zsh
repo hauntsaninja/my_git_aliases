@@ -53,6 +53,7 @@ alias glgo="git log --date=local --pretty='%C(white)%h%C(yellow)%d %Cred%>|(30)%
 alias glgoa="git log --date=local --pretty='%C(white)%h%C(yellow)%d %Cred%>|(30)%an%Creset: %s %<|(90)%C(yellow)(%cd)' --author"
 
 alias gl='git pull'
+alias glu='git pull upstream $(git symbolic-ref --short HEAD)'
 alias gp='git push'
 alias gpoh='git push origin HEAD'
 
