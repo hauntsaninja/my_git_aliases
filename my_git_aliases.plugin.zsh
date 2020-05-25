@@ -34,6 +34,7 @@ alias gcl='git clone'
 
 alias gco='git checkout'
 alias gcom='git checkout master'
+alias gcoi='git checkout --'  # look into git restore at some point
 
 alias gcp='git cherry-pick'
 alias gcpa='git cherry-pick --abort'
