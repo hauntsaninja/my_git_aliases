@@ -73,6 +73,9 @@ alias grba='git rebase --abort'
 alias grbc='git rebase --continue'
 alias grbi='git rebase --interactive'
 
+# Need to install git-revise for this to work
+alias grv='git revise'
+
 alias gs='git status'
 alias gss='git status --short'
 
