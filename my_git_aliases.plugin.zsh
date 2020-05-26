@@ -84,7 +84,9 @@ alias fgrlg='git reflog --color --decorate=short | pyp -b "h = set()" "c = x.spl
 
 # Need to install git-revise for this to work
 alias grv='git revise'
-alias fgrv='git revise $(fglg)'
+alias fgrv='git-revise $(fglg)'
+alias grvi='git-revise --interactive'
+alias grvh='git-revise --help'
 
 alias gs='git status'
 alias gss='git status --short'
