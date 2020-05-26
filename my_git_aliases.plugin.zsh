@@ -67,7 +67,7 @@ glall () {
     cb=$(git symbolic-ref --short HEAD)
     git fetch
     for b in $(git for-each-ref --format='%(refname:short)' refs/heads/); do
-        git rev-parse $b@{u} > /dev/null 2>&1 && {! git merge-tree $(git merge-base $b@{u} $b) $b@{u} $b | grep -q '<<<<<<<'} && git checkout $b && git rebase FETCH_HEAD
+        git rev-parse $b@{u} > /dev/null 2>&1 && {! git merge-tree $(git merge-base $b@{u} $b) $b@{u} $b | grep -q '<<<<<<<'} && git checkout $b && {git rebase FETCH_HEAD || git rebase --abort}
     done;
     git checkout $cb
 }
