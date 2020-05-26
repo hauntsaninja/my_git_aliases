@@ -1,4 +1,5 @@
 alias ga='git add'
+alias fga='git add $(git ls-files --modified | fzf --preview "git diff --color -- {1}")'
 alias gap='git add --patch'
 alias gau='git add --update'
 
@@ -6,6 +7,7 @@ alias gb='git branch'
 alias gbc='git checkout -b'
 alias gbcu='git checkout --track @{u} -b'
 alias gbd='git branch --delete --force'
+alias fgbd='git branch --delete --force $(git branch --verbose | fzf --preview "pyp \"{}[1:].split()[0]\" | xargs git log --stat --color" | pyp "x[1:].split()[0]")'
 alias gbm='git branch --move'
 alias gbv='git branch --verbose'
 alias gbvv='git branch --verbose --verbose'
@@ -33,8 +35,10 @@ gcamendto () {c=`git rev-parse "$1"`; git commit --fixup "$c" && GIT_SEQUENCE_ED
 alias gcl='git clone'
 
 alias gco='git checkout'
+alias fgco='git checkout $(git branch --verbose | fzf --preview "pyp \"{}[1:].split()[0]\" | xargs git log --stat --color"| pyp "x[1:].split()[0]")'
 alias gcom='git checkout master'
 alias gcoi='git checkout --'  # look into git restore at some point
+alias fgcoi='git checkout $(git ls-files --modified | fzf --preview "git diff --color -- {1}")'
 
 alias gcp='git cherry-pick'
 alias gcpa='git cherry-pick --abort'
@@ -47,6 +51,7 @@ alias gf='git fetch'
 alias gfu='git fetch upstream'
 
 alias glg='git log --stat'
+fglg () {git log --color --date=local --pretty='%C(white)%h %C(reset)%s' $@ | fzf --ansi --reverse --preview 'git show --color {1}' | pyp 'x.split()[0]'}
 alias glgp='git log --stat --patch'
 alias glgpa='git log --stat --patch --author'
 
@@ -76,6 +81,7 @@ alias grbi='git rebase --interactive'
 
 # Need to install git-revise for this to work
 alias grv='git revise'
+alias fgrv='git revise $(fglg)'
 
 alias gs='git status'
 alias gss='git status --short'
