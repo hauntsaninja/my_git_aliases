@@ -79,6 +79,9 @@ alias grba='git rebase --abort'
 alias grbc='git rebase --continue'
 alias grbi='git rebase --interactive'
 
+alias grlg='git reflog'
+alias fgrlg='git reflog --color --decorate=short | pyp -b "h = set()" "c = x.split()[0]" "if c not in h: print(x)" "h.add(c)" | fzf --ansi --reverse --preview "git show --color {1}" | pyp "x.split()[0]"'
+
 # Need to install git-revise for this to work
 alias grv='git revise'
 alias fgrv='git revise $(fglg)'
