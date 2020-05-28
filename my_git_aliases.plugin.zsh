@@ -41,6 +41,7 @@ alias gcoi='git checkout --'  # look into git restore at some point
 alias fgcoi='git checkout $(git ls-files --modified | fzf --preview "git diff --color -- {1}")'
 
 alias gcp='git cherry-pick'
+fgcp () {git cherry-pick $(git log --branches --not --remotes --decorate --color --oneline $@ | fzf --ansi --preview 'git show --color {1}' | pyp 'x.split()[0]')}
 alias gcpa='git cherry-pick --abort'
 alias gcpc='git cherry-pick --continue'
 
