@@ -7,7 +7,7 @@ alias gb='git branch'
 alias gbc='git checkout -b'
 alias gbcu='git checkout --track @{u} -b'
 alias gbd='git branch --delete --force'
-alias fgbd='git branch --delete --force $(git branch --color --verbose | fzf --ansi --preview "pyp \"{}[1:].split()[0]\" | xargs git log --stat --color" | pyp "x[1:].split()[0]")'
+alias fgbd='git branch --delete --force $(git branch --color --verbose | fzf --ansi --preview "pyp \"{}[1:].split()[0]\" | xargs git log --stat --color -n 10" | pyp "x[1:].split()[0]")'
 alias gbm='git branch --move'
 alias gbv='git branch --verbose'
 alias gbvv='git branch --verbose --verbose'
@@ -35,7 +35,7 @@ gcamendto () {c=`git rev-parse "$1"`; git commit --fixup "$c" && GIT_SEQUENCE_ED
 alias gcl='git clone'
 
 alias gco='git checkout'
-alias fgco='git checkout $(git branch --color --verbose | fzf --ansi --preview "pyp \"{}[1:].split()[0]\" | xargs git log --stat --color"| pyp "x[1:].split()[0]")'
+alias fgco='git checkout $(git branch --color --verbose | fzf --ansi --preview "pyp \"{}[1:].split()[0]\" | xargs git log --stat --color -n 10"| pyp "x[1:].split()[0]")'
 alias gcom='git checkout master'
 alias gcoi='git checkout --'  # look into git restore at some point
 alias fgcoi='git checkout $(git ls-files --modified | fzf --preview "git diff --color -- {1}")'
