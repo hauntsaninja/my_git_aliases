@@ -52,7 +52,7 @@ alias gf='git fetch'
 alias gfu='git fetch upstream'
 
 alias glg='git log --stat'
-fglg () {git log --color --date=local --pretty='%C(white)%h %C(reset)%s' $@ | fzf --ansi --reverse --preview 'git show --color {1}' | pyp 'x.split()[0]'}
+fglg () {git log --color --oneline $@ | fzf --ansi --reverse --preview 'git show --color {1}' | pyp 'x.split()[0]'}
 alias glgp='git log --stat --patch'
 alias glgpa='git log --stat --patch --author'
 
