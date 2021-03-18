@@ -35,7 +35,7 @@ gcamendto () {c=`git rev-parse "$1"`; git commit --fixup "$c" && GIT_SEQUENCE_ED
 alias gcl='git clone'
 
 alias gco='git checkout'
-fgco () {git checkout $(git branch --color --verbose | fzf --ansi $([[ -z "$1" ]] && echo "" || echo "--query $@") --preview 'git log --stat --color -n 10 $(pyp "{}[1:].split()[0]")' | pyp "x[1:].split()[0]")}
+fgco () {git checkout $(git branch --sort=-authordate --color --format '%(HEAD) %(align:20)%(refname:short)%(end) %(color:dim)%(align:9)%(upstream:track)%(end) %(color:reset)%(contents:subject)' | fzf --ansi $([[ -z "$1" ]] && echo "" || echo "--query $@") --preview 'git log --stat --color -n 10 $(pyp "{}[1:].split()[0]") --' | pyp "x[1:].split()[0]")}
 alias gcom='git checkout master'
 alias gcoi='git checkout --'  # look into git restore at some point
 alias fgcoi='git checkout $(git ls-files --modified | fzf --preview "git diff --color -- {1}")'
