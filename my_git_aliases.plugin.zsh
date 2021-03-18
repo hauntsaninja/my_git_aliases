@@ -20,6 +20,8 @@ gbgcm () {
         [[ -n $(git merge-tree $(git merge-base $upstream $b) $upstream $b) ]] || git branch -D $b
     done
 }
+# Need to install git-delete-merged-branches for this to work
+alias gbgcd='git-delete-merged-branches --effort 3 -b master --yes'
 
 alias gbl='git blame -b -w'
 
