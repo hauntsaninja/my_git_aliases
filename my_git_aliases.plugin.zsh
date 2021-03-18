@@ -1,5 +1,5 @@
 alias ga='git add'
-alias fga='git add $(git ls-files --modified | fzf --preview "git diff --color -- {1}")'
+alias fga='git add $(git ls-files --modified --other --exclude-standard | fzf -m --preview "git diff --color -- {1}")'
 alias gap='git add --patch'
 alias gau='git add --update'
 
@@ -7,7 +7,7 @@ alias gb='git branch'
 alias gbc='git checkout -b'
 alias gbcu='git checkout --track @{u} -b'
 alias gbd='git branch --delete --force'
-alias fgbd='git branch --delete --force $(git branch --color --verbose | fzf --ansi --preview "pyp \"{}[1:].split()[0]\" | xargs git log --stat --color -n 10" | pyp "x[1:].split()[0]")'
+alias fgbd='git branch --delete --force $(git branch --color --verbose | fzf -m --ansi --preview "pyp \"{}[1:].split()[0]\" | xargs git log --stat --color -n 10" | pyp "x[1:].split()[0]")'
 alias gbm='git branch --move'
 alias gbv='git branch --verbose'
 alias gbvv='git branch --verbose --verbose'
@@ -38,7 +38,7 @@ alias gco='git checkout'
 fgco () {git checkout $(git branch --sort=-authordate --color --format '%(HEAD) %(align:20)%(refname:short)%(end) %(color:dim)%(align:9)%(upstream:track)%(end) %(color:reset)%(contents:subject)' | fzf --ansi $([[ -z "$1" ]] && echo "" || echo "--query $@") --preview 'git log --stat --color -n 10 $(pyp "{}[1:].split()[0]") --' | pyp "x[1:].split()[0]")}
 alias gcom='git checkout master'
 alias gcoi='git checkout --'  # look into git restore at some point
-alias fgcoi='git checkout $(git ls-files --modified | fzf --preview "git diff --color -- {1}")'
+alias fgcoi='git checkout $(git ls-files --modified | fzf -m --preview "git diff --color -- {1}")'
 
 alias gcp='git cherry-pick'
 fgcp () {git cherry-pick $(git log --branches --not --remotes --decorate --color --oneline $@ | fzf --ansi --preview 'git show --color {1}' | pyp 'x.split()[0]')}
