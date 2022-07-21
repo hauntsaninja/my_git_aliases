@@ -91,6 +91,17 @@ alias grbi='git rebase --interactive'
 alias grlg='git reflog'
 alias fgrlg='git reflog --color --decorate=short | pyp -b "h = set()" "c = x.split()[0]" "if c not in h: print(x)" "h.add(c)" | fzf --ansi --reverse --preview "git show --color {1}" | pyp "x.split()[0]"'
 
+alias grm='git remote -vv'
+grmau () {
+    [[ -n $1 ]] || {echo 'Usage: grmau $upstream [$remote=origin]'; return 1}
+    remoteurl=$(git remote -vv | grep ${2:-origin} | grep fetch | pyp 'x.split()[1]')
+    git remote add upstream $(pyp "re.sub('(?<=github.com[/:])([^/]+)', '$1', '$remoteurl')")
+}
+grmssh () {
+    remoteurl=$(git remote -vv | grep ${1:-origin} | grep fetch | pyp 'x.split()[1]' | pyp 're.sub("https://github.com", "git@github.com", x)')
+    git remote set-url ${1:-origin} $remoteurl
+}
+
 # Need to install git-revise for these to work
 alias grv='git revise'
 alias fgrv='git-revise $(fglg)'
