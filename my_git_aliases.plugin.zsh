@@ -33,7 +33,10 @@ alias gca='git commit --verbose --all'
 alias gca!='git commit --verbose --all --amend'
 alias gcan!='git commit --verbose --all --no-edit --amend'
 
-gcamendto () {c=`git rev-parse "$1"`; git commit --fixup "$c" && GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash "$c^"}
+gcamendto () {
+    c=`git rev-parse "$1"`
+    git commit --fixup "$c" && GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash "$c^"
+}
 
 alias gcl='git clone'
 
@@ -86,7 +89,7 @@ alias grbi='git rebase --interactive'
 alias grlg='git reflog'
 alias fgrlg='git reflog --color --decorate=short | pyp -b "h = set()" "c = x.split()[0]" "if c not in h: print(x)" "h.add(c)" | fzf --ansi --reverse --preview "git show --color {1}" | pyp "x.split()[0]"'
 
-# Need to install git-revise for this to work
+# Need to install git-revise for these to work
 alias grv='git revise'
 alias fgrv='git-revise $(fglg)'
 alias grvi='git-revise --interactive'
