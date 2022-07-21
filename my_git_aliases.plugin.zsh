@@ -106,3 +106,10 @@ alias gstd='git stash drop'
 alias gstk='git stash --keep-index'
 alias gstl='git stash list --patch'
 alias gstp='git stash pop'
+fgstl () {
+    git stash list --format="%gd %cr" | fzf -m --ansi --preview "git stash show --color {1}" | pyp "x.split()[0]"
+}
+fgstd () {
+    c=$(fgstl)
+    [[ -n "$c" ]] && git stash drop $c
+}
