@@ -13,17 +13,21 @@ alias gbm='git branch --move'
 alias gbu='git branch --set-upstream-to'
 alias gbv='git branch --verbose'
 alias gbvv='git branch --verbose --verbose'
-alias gbvl='git show-branch --topics origin/master'
+alias gbvl='git show-branch --topics origin/$(gbmaster)'
 
-gbgc () {git branch --merged origin/master | grep -v '\*\|master' | xargs -r git branch -d}
+gbmaster () {
+    [ $(git rev-parse --verify main 2> /dev/null) ] && echo main || echo master
+}
+
+gbgc () {git branch --merged origin/$(gbmaster) | grep -v '\*\|master|main' | xargs -r git branch -d}
 gbgcm () {
-    for b in $(git branch | grep -v '\*\|master'); do
-        upstream=$(git rev-parse $b@{u} 2> /dev/null || echo 'origin/master')
+    for b in $(git branch | grep -v '\*\|master|main'); do
+        upstream=$(git rev-parse $b@{u} 2> /dev/null || echo "origin/$(gbmaster)")
         [[ -n $(git merge-tree $(git merge-base $upstream $b) $upstream $b) ]] || git branch -D $b
     done
 }
 # Need to install git-delete-merged-branches for this to work
-alias gbgcd='git-delete-merged-branches --effort 3 -b master --yes'
+alias gbgcd='git-delete-merged-branches --effort 3 -b $(gbmaster) --yes'
 
 alias gbl='git blame -b -w'
 
