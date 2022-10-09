@@ -19,6 +19,9 @@ gbmaster () {
     [ $(git rev-parse --verify main 2> /dev/null) ] && echo main || echo master
 }
 
+# Need to install git-delete-merged-branches for this to work
+alias gbgcd='git-delete-merged-branches --effort 3 -b $(gbmaster) --yes'
+# In case you don't have git-delete-merged-branches installed
 gbgc () {git branch --merged origin/$(gbmaster) | grep -v '\*\|master|main' | xargs -r git branch -d}
 gbgcm () {
     for b in $(git branch | grep -v '\*\|master|main'); do
@@ -26,8 +29,6 @@ gbgcm () {
         [[ -n $(git merge-tree $(git merge-base $upstream $b) $upstream $b) ]] || git branch -D $b
     done
 }
-# Need to install git-delete-merged-branches for this to work
-alias gbgcd='git-delete-merged-branches --effort 3 -b $(gbmaster) --yes'
 
 alias gbl='git blame -b -w'
 
@@ -37,11 +38,6 @@ alias gcn!='git commit --verbose --no-edit --amend'
 alias gca='git commit --verbose --all'
 alias gca!='git commit --verbose --all --amend'
 alias gcan!='git commit --verbose --all --no-edit --amend'
-
-gcamendto () {
-    c=`git rev-parse "$1"`
-    git commit --fixup "$c" && GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash "$c^"
-}
 
 alias gcl='git clone'
 
@@ -111,6 +107,11 @@ alias grv='git revise'
 alias fgrv='git-revise $(fglg)'
 alias grvi='git-revise --interactive'
 alias grvh='git-revise --help'
+# In case you don't have git-revise installed
+gcamendto () {
+    c=`git rev-parse "$1"`
+    git commit --fixup "$c" && GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash "$c^"
+}
 
 alias gs='git status'
 alias gss='git status --short'
