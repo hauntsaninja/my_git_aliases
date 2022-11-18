@@ -1,3 +1,6 @@
+# Shantanu's git aliases
+# https://github.com/hauntsaninja/my_git_aliases
+
 alias ga='git add'
 alias fga='git add $(git ls-files --modified --other --exclude-standard | fzf -m --preview "git diff --color -- {1}")'
 alias gap='git add --patch'
