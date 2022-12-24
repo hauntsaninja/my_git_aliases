@@ -11,7 +11,7 @@ alias gb='git branch'
 alias gbc='git checkout -b'
 alias gbcu='git checkout --track @{u} -b'
 alias gbd='git branch --delete --force'
-alias fgbd='git branch --delete --force $(git branch --color --verbose | fzf -m --ansi --preview "pyp \"{}[1:].split()[0]\" | xargs -I{} git log --stat --color -n 10 {} --" | pyp "x[1:].split()[0]")'
+alias fgbd='git branch --delete --force $(git branch --color --verbose | fzf -m --ansi --preview "echo {} | pyp \"lines[0][1:].split()[0]\" | xargs -IXXX git log --stat --color -n 10 XXX --" | pyp "x[1:].split()[0]")'
 alias gbm='git branch --move'
 alias gbu='git branch --set-upstream-to'
 alias gbv='git branch --verbose'
@@ -45,7 +45,7 @@ alias gcan!='git commit --verbose --all --no-edit --amend'
 alias gcl='git clone'
 
 alias gco='git checkout'
-fgco () {git checkout $(git branch --sort=-authordate --color --format '%(HEAD) %(align:20)%(refname:short)%(end) %(color:dim)%(align:9)%(upstream:track)%(end) %(color:reset)%(contents:subject)' | fzf --ansi $([[ -z "$1" ]] && echo "" || echo "--query $@") --preview 'git log --stat --color -n 10 $(pyp "{}[1:].split()[0]") --' | pyp "x[1:].split()[0]")}
+fgco () {git checkout $(git branch --sort=-authordate --color --format '%(HEAD) %(align:20)%(refname:short)%(end) %(color:dim)%(align:9)%(upstream:track)%(end) %(color:reset)%(contents:subject)' | fzf --ansi $([[ -z "$1" ]] && echo "" || echo "--query $@") --preview 'git log --stat --color -n 10 $(echo {} | pyp "lines[0][1:].split()[0]") --' | pyp "x[1:].split()[0]")}
 alias gcom='git checkout main 2> /dev/null || git checkout master'
 alias gcoi='git checkout --'  # look into git restore at some point
 alias fgcoi='git checkout $(git ls-files --modified | fzf -m --preview "git diff --color -- {1}")'
