@@ -32,7 +32,7 @@ gbgcm () {
         upstream_tree=$(git rev-parse $upstream:)
         merged_tree=$(git merge-tree --write-tree $upstream $b)
         if [ "$upstream_tree" = "$merged_tree" ]; then
-            git branch -d $b
+            git branch --delete --force $b
         fi
     done
 }
