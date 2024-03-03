@@ -11,7 +11,7 @@ alias gb='git branch'
 alias gbc='git checkout -b'
 alias gbcu='git checkout --track @{u} -b'
 alias gbd='git branch --delete --force'
-alias fgbd='git branch --delete --force $(git branch --sort=-authordate --color --verbose | fzf -m --ansi --preview "echo {} | pyp \"lines[0][1:].split()[0]\" | xargs -IXXX git log --stat --color -n 10 XXX --" | pyp "x[1:].split()[0]")'
+alias fgbd='git branch --delete --force $(git branch --sort=-authordate --color --verbose | fzf -m --ansi --preview "branch=\$(echo {} | pyp \"lines[0][1:].split()[0]\"); upstream=\$(git rev-parse \$branch@{u} 2> /dev/null || echo \"origin/\$(gbmaster)\"); git merge-tree --trivial-merge \$(git merge-base \$upstream \$branch) \$upstream \$branch; git log --stat --color -n 10 \$branch --" | pyp "x[1:].split()[0]")'
 alias gbm='git branch --move'
 alias gbu='git branch --set-upstream-to'
 alias gbv='git branch --verbose'
@@ -25,11 +25,15 @@ gbmaster () {
 # Need to install git-delete-merged-branches for this to work
 alias gbgcd='git-delete-merged-branches --effort 3 -b $(gbmaster) --yes'
 # In case you don't have git-delete-merged-branches installed
-gbgc () {git branch --merged origin/$(gbmaster) | grep -v '\*\|master|main' | xargs -r git branch -d}
+gbgc () {git branch --merged origin/$(gbmaster) | grep -v -E '\*|\bmaster\b|\bmain\b' | xargs -r git branch -d}
 gbgcm () {
-    for b in $(git branch | grep -v '\*\|master|main'); do
+    for b in $(git branch | grep -v -E '\*|\bmaster\b|\bmain\b'); do
         upstream=$(git rev-parse $b@{u} 2> /dev/null || echo "origin/$(gbmaster)")
-        [[ -n $(git merge-tree $(git merge-base $upstream $b) $upstream $b) ]] || git branch -D $b
+        upstream_tree=$(git rev-parse $upstream:)
+        merged_tree=$(git merge-tree --write-tree $upstream $b)
+        if [ "$upstream_tree" = "$merged_tree" ]; then
+            git branch -d $b
+        fi
     done
 }
 
@@ -79,7 +83,7 @@ glall () {
     cb=$(git symbolic-ref --short HEAD)
     git fetch
     for b in $(git for-each-ref --format='%(refname:short)' refs/heads/); do
-        git rev-parse $b@{u} > /dev/null 2>&1 && {! git merge-tree $(git merge-base $b@{u} $b) $b@{u} $b | grep -q '<<<<<<<'} && git checkout $b && {git rebase FETCH_HEAD || git rebase --abort}
+        git rev-parse $b@{u} > /dev/null 2>&1 && {! git merge-tree --trivial-merge $(git merge-base $b@{u} $b) $b@{u} $b | grep -q '<<<<<<<'} && git checkout $b && {git rebase FETCH_HEAD || git rebase --abort}
     done;
     git checkout $cb
 }
