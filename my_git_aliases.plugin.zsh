@@ -23,8 +23,8 @@ gbmaster () {
 }
 
 # Need to install git-delete-merged-branches for this to work
+# Actually, these days gbgcm works better than git-delete-merged-branches
 alias gbgcd='git-delete-merged-branches --effort 3 -b $(gbmaster) --yes'
-# In case you don't have git-delete-merged-branches installed
 gbgc () {git branch --merged origin/$(gbmaster) | grep -v -E '\*|\bmaster\b|\bmain\b' | xargs -r git branch -d}
 gbgcm () {
     for b in $(git branch | grep -v -E '\*|\bmaster\b|\bmain\b'); do

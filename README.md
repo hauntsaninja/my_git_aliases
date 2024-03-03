@@ -17,4 +17,4 @@ Several of the more complicated aliases use [pyp](https://github.com/hauntsaninj
 
 If you use the `fzf` aliases, you'll need [fzf](https://github.com/junegunn/fzf).
 
-Some aliases use [git-revise](https://github.com/mystor/git-revise) and [git-delete-merged-branches](https://github.com/hartwork/git-delete-merged-branches).
+Some aliases use [git-revise](https://github.com/mystor/git-revise).
