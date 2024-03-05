@@ -13,7 +13,7 @@ Just `source` the file `my_git_aliases.plugin.zsh` somewhere in your setup.
 
 Alternatively, if you use a plugin manager like [zgen](https://github.com/tarjoilija/zgen), this is as easy as adding `zgen load hauntsaninja/my_git_aliases` in the right place.
 
-Several of the more complicated aliases use [pyp](https://github.com/hauntsaninja/pyp).
+Several of the more complicated aliases use [pyp](https://github.com/hauntsaninja/pyp). Install it using `pip install pypyp`.
 
 If you use the `fzf` aliases, you'll need [fzf](https://github.com/junegunn/fzf).
 
