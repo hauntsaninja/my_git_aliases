@@ -28,7 +28,7 @@ alias gbgcd='git-delete-merged-branches --effort 3 -b $(gbmaster) --yes'
 gbgc () {git branch --merged origin/$(gbmaster) | grep -v -E '\*|\bmaster\b|\bmain\b' | xargs -r git branch -d}
 gbgcm () {
     for b in $(git branch | grep -v -E '\*|\bmaster\b|\bmain\b'); do
-        upstream=$(git rev-parse $b@{u} 2> /dev/null || echo "origin/$(gbmaster)")
+        upstream=$(git rev-parse --abbrev-ref --symbolic-full-name "$b@{u}" 2> /dev/null) || upstream="origin/$(gbmaster)"
         upstream_tree=$(git rev-parse $upstream:)
         merged_tree=$(git merge-tree --write-tree $upstream $b)
         if [ "$upstream_tree" = "$merged_tree" ]; then
