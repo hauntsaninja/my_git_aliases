@@ -75,6 +75,9 @@ alias gcpc='git cherry-pick --continue'
 
 alias gd='git diff'
 alias gdc='git diff --cached'
+fgd () {
+    git diff --name-only $1 | fzf --ansi --reverse --no-sort --preview "git diff --color $1 -- {1}"
+}
 
 alias gf='git fetch'
 alias gfu='git fetch upstream'
