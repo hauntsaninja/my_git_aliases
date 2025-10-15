@@ -2,10 +2,10 @@
 # https://github.com/hauntsaninja/my_git_aliases
 
 alias ga='git add'
-alias fga='git add $({ git diff-files --name-only; git ls-files --others --exclude-standard } | fzf -m --preview "git diff --color -- {1}")'
+alias fga='git add $({ git diff-files --name-only --relative; git ls-files --others --exclude-standard } | fzf -m --preview "git diff --color -- {1}")'
 alias gap='git add --patch'
 alias gau='git add --update'
-alias fgau='git add $(git diff-files --name-only | fzf -m --preview "git diff --color -- {1}")'
+alias fgau='git add $(git diff-files --name-only --relative | fzf -m --preview "git diff --color -- {1}")'
 
 alias gb='git branch'
 alias gbc='git checkout -b'
@@ -59,14 +59,14 @@ gcoo () {
 }
 alias gcom='git checkout $(gbmaster)'
 alias gcoi='git checkout --'
-alias fgcoi='git checkout $(git diff-files --name-only | fzf -m --preview "git diff --color -- {1}")'
+alias fgcoi='git checkout $(git diff-files --name-only --relative | fzf -m --preview "git diff --color -- {1}")'
 
 alias gsw='git switch'
 fgsw () {git switch $(git branch --sort=-authordate --color --format '%(HEAD) %(align:20)%(refname:short)%(end) %(color:dim)%(align:9)%(upstream:track)%(end) %(color:reset)%(contents:subject)' | fzf --ansi $([[ -z "$1" ]] && echo "" || echo "--query $@") --preview 'git log --stat --color -n 10 $(echo {} | pyp "lines[0][1:].split()[0]") --' | pyp "x[1:].split()[0]")}
 alias gswm='git switch $(gbmaster)'
 
 alias grs='git restore'
-alias fgrs='git restore $(git diff-files --name-only | fzf -m --preview "git diff --color -- {1}")'
+alias fgrs='git restore $(git diff-files --name-only --relative | fzf -m --preview "git diff --color -- {1}")'
 
 alias gcp='git cherry-pick'
 fgcp () {git cherry-pick $(git log --branches --not --remotes --decorate --color --oneline $@ | fzf --ansi --preview 'git show --color {1}' | pyp 'x.split()[0]')}
