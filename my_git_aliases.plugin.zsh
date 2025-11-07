@@ -49,7 +49,7 @@ alias gcan!='git commit --verbose --all --no-edit --amend'
 alias gcl='git clone'
 
 alias gco='git checkout'
-fgco () {git checkout $(git branch --sort=-authordate --color --format '%(HEAD) %(align:20)%(refname:short)%(end) %(color:dim)%(align:9)%(upstream:track)%(end) %(color:reset)%(contents:subject)' | fzf --ansi $([[ -z "$1" ]] && echo "" || echo "--query $@") --preview 'git log --stat --color -n 10 $(echo {} | pyp "lines[0][1:].split()[0]") --' | pyp "x[1:].split()[0]")}
+fgco () {git checkout $(git branch --sort=-authordate --color --format '%(HEAD) %(align:20)%(refname:short)%(end) %(color:dim)%(align:9)%(end) %(color:reset)%(contents:subject)' | fzf --ansi $([[ -z "$1" ]] && echo "" || echo "--query $@") --preview 'git log --stat --color -n 10 $(echo {} | pyp "lines[0][1:].split()[0]") --' | pyp "x[1:].split()[0]")}
 gcoo () {
     git fetch origin $1
     echo "$1 $(git rev-parse $1 2> /dev/null)"
@@ -62,7 +62,7 @@ alias gcoi='git checkout --'
 alias fgcoi='git checkout $(git diff-files --name-only --relative | fzf -m --preview "git diff --color -- {1}")'
 
 alias gsw='git switch'
-fgsw () {git switch $(git branch --sort=-authordate --color --format '%(HEAD) %(align:20)%(refname:short)%(end) %(color:dim)%(align:9)%(upstream:track)%(end) %(color:reset)%(contents:subject)' | fzf --ansi $([[ -z "$1" ]] && echo "" || echo "--query $@") --preview 'git log --stat --color -n 10 $(echo {} | pyp "lines[0][1:].split()[0]") --' | pyp "x[1:].split()[0]")}
+fgsw () {git switch $(git branch --sort=-authordate --color --format '%(HEAD) %(align:20)%(refname:short)%(end) %(color:dim)%(align:9)%(end) %(color:reset)%(contents:subject)' | fzf --ansi $([[ -z "$1" ]] && echo "" || echo "--query $@") --preview 'git log --stat --color -n 10 $(echo {} | pyp "lines[0][1:].split()[0]") --' | pyp "x[1:].split()[0]")}
 alias gswm='git switch $(gbmaster)'
 
 alias grs='git restore'
