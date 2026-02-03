@@ -10,6 +10,7 @@ alias fgau='git add $(git diff-files --name-only --relative | fzf -m --preview "
 alias gb='git branch'
 alias gbc='git checkout -b'
 alias gbcu='git checkout --track @{u} -b'
+gbcm () { git switch --create $1 $(git merge-base HEAD origin/$(gbmaster)) && git branch --set-upstream-to origin/$(gbmaster)}
 alias gbd='git branch --delete --force'
 alias fgbd='git branch --delete --force $(git branch --sort=-authordate --color --verbose | fzf -m --ansi --preview "branch=\$(echo {} | pyp \"lines[0][1:].split()[0]\"); upstream=\$(git rev-parse \$branch@{u} 2> /dev/null || echo origin/master); git merge-tree --trivial-merge \$(git merge-base \$upstream \$branch) \$upstream \$branch; git log --stat --color -n 10 \$branch --" | pyp "x[1:].split()[0]")'
 alias gbm='git branch --move'
