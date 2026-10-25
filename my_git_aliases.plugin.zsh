@@ -79,6 +79,17 @@ alias gdc='git diff --cached'
 fgd () {
     git diff --name-only $1 | fzf --ansi --reverse --no-sort --preview "git diff --color $1 -- {1}"
 }
+gdmb() {
+    git diff --merge-base "origin/$(gbmaster)" "$@" --
+}
+fgdmb() (
+    local ref=${1-} base
+    base=$(git merge-base "origin/$(gbmaster)" "${ref:-HEAD}") || return
+
+    git diff --name-only -z "$base" ${ref:+"$ref"} -- |
+        fzf --read0 --ansi --reverse --no-sort \
+            --preview "git --literal-pathspecs diff --color $base ${ref:+${(qq)ref}} -- {}"
+)
 
 alias gf='git fetch'
 alias gfu='git fetch upstream'
