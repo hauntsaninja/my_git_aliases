@@ -77,7 +77,7 @@ alias gcpc='git cherry-pick --continue'
 alias gd='git diff'
 alias gdc='git diff --cached'
 fgd () {
-    git diff --name-only $1 | fzf --ansi --reverse --no-sort --preview "git diff --color $1 -- {1}"
+    git diff --name-only $1 | fzf --reverse --no-sort --preview "git diff --color $1 -- {1}"
 }
 gdmb() {
     git diff --merge-base "origin/$(gbmaster)" "$@" --
@@ -87,7 +87,7 @@ fgdmb() (
     base=$(git merge-base "origin/$(gbmaster)" "${ref:-HEAD}") || return
 
     git diff --name-only -z "$base" ${ref:+"$ref"} -- |
-        fzf --read0 --ansi --reverse --no-sort \
+        fzf --read0 --reverse --no-sort \
             --preview "git --literal-pathspecs diff --color $base ${ref:+${(qq)ref}} -- {}"
 )
 
@@ -160,7 +160,7 @@ alias gstk='git stash --keep-index'
 alias gstl='git stash list --patch'
 alias gstp='git stash pop'
 fgstl () {
-    git stash list --format="%gd %cr" | fzf -m --ansi --preview "git stash show --color {1}" | pyp "x.split()[0]"
+    git stash list --format="%gd %cr" | fzf -m --preview "git stash show --color {1}" | pyp "x.split()[0]"
 }
 fgstd () {
     c=$(fgstl)
